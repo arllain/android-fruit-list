@@ -33,7 +33,12 @@ class MainActivity : AppCompatActivity() {
         val fruitList = ArrayList<Fruit>()
 
         for (i in 0 until size){
-            val drawable = R.drawable.ic_fruit_image_24
+            val drawable = when (i % 3 ) {
+                0 -> R.drawable.ic_banana
+                1 -> R.drawable.ic_mamao
+                else -> R.drawable.ic_morango
+            }
+
             val n = i + 1
             val item = Fruit(drawable, "Fruit $n", "Benefits $n")
             fruitList += item
