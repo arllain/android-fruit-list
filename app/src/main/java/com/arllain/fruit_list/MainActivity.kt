@@ -4,8 +4,10 @@ import android.os.Bundle
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.arllain.fruit_list.adapter.FruitAdapter
+import com.arllain.fruit_list.model.Fruit
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,5 +20,26 @@ class MainActivity : AppCompatActivity() {
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                     .setAction("Action", null).show()
         }
+
+        val fruitList = generateDummyList(100)
+        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
+        recyclerView.adapter = FruitAdapter(fruitList)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.setHasFixedSize(true)
+
     }
+
+    private fun generateDummyList(size: Int): List<Fruit> {
+        val fruitList = ArrayList<Fruit>()
+
+        for (i in 0 until size){
+            val drawable = R.drawable.ic_fruit_image_24
+            val n = i + 1
+            val item = Fruit(drawable, "Fruit $n", "Benefits $n")
+            fruitList += item
+        }
+
+        return  fruitList
+    }
+
 }
