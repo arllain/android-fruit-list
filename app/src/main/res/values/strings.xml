@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Fruit List</string>
+    <string name="upload_photo">Upload Photo</string>
+    <string name="fruit_name">Name</string>
+    <string name="add_photo">add photo</string>
+    <string name="fruit_benefits">Benefits</string>
+    <string name="ok">OK</string>
 </resources>

@@ -2,6 +2,7 @@ package com.arllain.fruit_list
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.arllain.fruit_list.databinding.ActivityViewFruitBinding
 import com.arllain.fruit_list.model.Fruit
 
@@ -16,6 +17,7 @@ class ViewFruitActivity : AppCompatActivity() {
         setContentView(binding.root)
         fruit = intent.getParcelableExtra<Fruit>(MainActivity.MAIN_ACTIVITY_FRUIT_EXTRA_ID)
         binding.tvFruitName.text = fruit?.name
+        Toast.makeText(this, "${fruit?.imageResource}", Toast.LENGTH_SHORT).show()
         val drawable = when (fruit?.imageResource ) {
             0 -> R.drawable.ic_banana
             1 -> R.drawable.ic_mamao
