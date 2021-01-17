@@ -16,8 +16,9 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
     companion object {
         const val MAIN_ACTIVITY_FRUIT_EXTRA_ID = "fruit"
         const val MAIN_ACTIVITY_ADD_FRUIT_REQUEST_CODE = 0
-        const val MAIN_ACTIVITY_DELETE_REQUEST_CODE = 1;
+        const val MAIN_ACTIVITY_DETAILS_REQUEST_CODE  = 1;
         const val FRUIT_TO_ADD = "fruit_to_add"
+        const val FRUIT_TO_DELETE = "fruit_to_delete"
     }
 
     private var  fruitList = generateDummyList(3)
@@ -28,24 +29,31 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        setupAddButton();
+        setupRecyclerView()
+    }
+
+    private fun setupAddButton() {
         findViewById<FloatingActionButton>(R.id.fab).setOnClickListener {
             val addFruitIntent = Intent(this, AddFruitActivity::class.java)
             startActivityForResult(addFruitIntent, MAIN_ACTIVITY_ADD_FRUIT_REQUEST_CODE)
         }
+    }
 
+    private fun setupRecyclerView() {
         val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = LinearLayoutManager(this)
         recyclerView.setHasFixedSize(true)
-
     }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == MAIN_ACTIVITY_ADD_FRUIT_REQUEST_CODE) {
                 addFruit(data)
-            } else if (requestCode == MAIN_ACTIVITY_DELETE_REQUEST_CODE) {
+            } else if (requestCode == MAIN_ACTIVITY_DETAILS_REQUEST_CODE ) {
                 removeFruit(data)
             }
         }
@@ -59,22 +67,18 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
     }
 
     private fun removeFruit(data: Intent?){
-//        val index: Int = Random.nextInt(8)
-//        fruitList.removeAt(index)
-//        adapter.notifyItemRemoved(index)
-//
-//        data?.extras?.get(FRUIT_TO_REMOVE)?.let {
-//            val positionToUpdate = fruits.indexOf(it)
-//            fruits.remove(it)
-//            fruitAdapter.notifyItemRemoved(positionToUpdate)
-//        }
+        data?.extras?.get(FRUIT_TO_DELETE)?.let {
+            val positionToUpdate = fruitList.indexOf(it)
+            fruitList.remove(it)
+            adapter.notifyItemRemoved(positionToUpdate)
+        }
     }
 
     override fun onItemClick(position: Int) {
         val fruit = fruitList[position]
-        val viewFruitIntent = Intent(this, ViewFruitActivity::class.java)
+        val viewFruitIntent = Intent(this@MainActivity, ViewFruitActivity::class.java)
         viewFruitIntent.putExtra( MAIN_ACTIVITY_FRUIT_EXTRA_ID, fruit)
-        startActivity(viewFruitIntent)
+        startActivityForResult(viewFruitIntent, MAIN_ACTIVITY_DETAILS_REQUEST_CODE)
     }
 
     private fun generateDummyList(size: Int): ArrayList<Fruit> {
@@ -106,8 +110,6 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
                         "cardiovasculares, melhorar a capacidade mental, prevenir o câncer " +
                         "e ajudar a combater inflamações"
             }
-
-
 
             val item = Fruit(drawable, "$fruitName", fruitBenefits)
             fruitList.add(item)
