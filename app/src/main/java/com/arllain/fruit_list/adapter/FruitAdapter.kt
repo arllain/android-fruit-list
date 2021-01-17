@@ -7,7 +7,9 @@ import com.arllain.fruit_list.R
 import com.arllain.fruit_list.model.Fruit
 import com.arllain.fruit_list.viewholder.FruitViewHolder
 
-class FruitAdapter(private val fruitList: List<Fruit>) : RecyclerView.Adapter<FruitViewHolder>() {
+class FruitAdapter(
+    private val fruitList: List<Fruit>,
+    private val listener: FruitViewHolder.OnItemClickListener) : RecyclerView.Adapter<FruitViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FruitViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -15,7 +17,7 @@ class FruitAdapter(private val fruitList: List<Fruit>) : RecyclerView.Adapter<Fr
             parent, false
         )
 
-        return FruitViewHolder(itemView)
+        return FruitViewHolder(itemView, listener)
     }
 
     override fun onBindViewHolder(holder: FruitViewHolder, position: Int) {
