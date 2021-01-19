@@ -3,13 +3,14 @@ package com.arllain.fruit_list
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arllain.fruit_list.adapter.FruitAdapter
 import com.arllain.fruit_list.model.Fruit
 import com.arllain.fruit_list.viewholder.FruitViewHolder
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+
 
 class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
 
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
         const val FRUIT_TO_DELETE = "fruit_to_delete"
     }
 
-    private var  fruitList = generateDummyList(3)
+    private var  fruitList = ArrayList<Fruit>()
     private val adapter = FruitAdapter(fruitList, this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,7 +78,7 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
     override fun onItemClick(position: Int) {
         val fruit = fruitList[position]
         val viewFruitIntent = Intent(this@MainActivity, ViewFruitActivity::class.java)
-        viewFruitIntent.putExtra( MAIN_ACTIVITY_FRUIT_EXTRA_ID, fruit)
+        viewFruitIntent.putExtra(MAIN_ACTIVITY_FRUIT_EXTRA_ID, fruit)
         startActivityForResult(viewFruitIntent, MAIN_ACTIVITY_DETAILS_REQUEST_CODE)
     }
 
@@ -110,11 +111,36 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
                         "cardiovasculares, melhorar a capacidade mental, prevenir o câncer " +
                         "e ajudar a combater inflamações"
             }
-
-            val item = Fruit(drawable, "$fruitName", fruitBenefits)
+            val item = Fruit(null, "$fruitName", fruitBenefits)
             fruitList.add(item)
         }
 
         return  fruitList
     }
+
+//    private fun getImageUriFromDrawable() {
+////        val imageUri = Uri.parse("res:///" + R.drawable.laranja)
+//        val drawable = R.drawable.ic_banana;
+//        val bitmap = BitmapFactory.decodeResource(resources, drawable)
+//        var base64 = bitmap?.convertToBase64()
+//        base64
+////        val stream: InputStream? = contentResolver.openInputStream(imageUri)
+//
+////        val imageStream: InputStream? =
+////            imageUri?.let { contentResolver.openInputStream(it) }
+////        val selectedImage = BitmapFactory.decodeStream(imageStream)
+//////        binding.imgFruit.setImageResource(android.R.color.transparent)
+//////        binding.imgFruit.setImageBitmap(selectedImage)
+////        var base64 = selectedImage.convertToBase64()
+////        base64
+
+
+//        val uri = Uri.parse("android.resource://res/drawable/ic_banana")
+//        R.drawable.ic_fruit_image_24
+//        val toString =
+//            Uri.parse("android.resource://" + R.class.getPackage().getName() + "/" + resourceId)
+//                .toString()
+//        val stream: InputStream? = contentResolver.openInputStream(uri)
+//    }
+
 }

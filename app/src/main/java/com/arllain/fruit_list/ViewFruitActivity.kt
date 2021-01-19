@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.arllain.fruit_list.databinding.ActivityViewFruitBinding
 import com.arllain.fruit_list.model.Fruit
+import com.arllain.fruit_list.utils.convertToBitmap
 
 class ViewFruitActivity : AppCompatActivity() {
 
@@ -24,13 +25,7 @@ class ViewFruitActivity : AppCompatActivity() {
     private fun setUpView() {
         fruit = intent.getParcelableExtra<Fruit>(MainActivity.MAIN_ACTIVITY_FRUIT_EXTRA_ID)
         binding.tvFruitName.text = fruit?.name
-        val drawable = when (fruit?.imageResource ) {
-            0 -> R.drawable.ic_banana
-            1 -> R.drawable.ic_mamao
-            else -> R.drawable.ic_morango
-        }
-
-        binding.fruitImageView.setImageResource(drawable)
+        binding.fruitImageView.setImageBitmap(fruit?.imageBase64?.convertToBitmap())
         binding.fruitBenefits.text = fruit?.benefits
     }
 

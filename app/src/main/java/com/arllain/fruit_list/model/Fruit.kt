@@ -5,7 +5,7 @@ import kotlinx.parcelize.Parcelize
 
 @Parcelize
 data class Fruit(
-    var imageResource: Int,
-    var name: String,
-    var benefits: String
+    var imageBase64: String? = null,
+    var name: String? = null,
+    var benefits: String? = null
 ) : Parcelable

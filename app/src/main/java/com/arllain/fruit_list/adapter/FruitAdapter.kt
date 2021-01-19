@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.arllain.fruit_list.R
 import com.arllain.fruit_list.model.Fruit
+import com.arllain.fruit_list.utils.convertToBitmap
 import com.arllain.fruit_list.viewholder.FruitViewHolder
 
 class FruitAdapter(
@@ -23,7 +24,7 @@ class FruitAdapter(
     override fun onBindViewHolder(holder: FruitViewHolder, position: Int) {
         val currentItem = fruitList[position]
 
-        holder.fruitImage.setImageResource(currentItem.imageResource)
+        holder.fruitImage.setImageBitmap(currentItem.imageBase64?.convertToBitmap())
         holder.fruitName.text = (currentItem.name)
         holder.fruitBenefits.text = (currentItem.benefits)
     }
