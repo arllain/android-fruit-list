@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddFruitActivity">
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <ImageView
+            android:id="@+id/img_fruit"
+            android:layout_width="389dp"
+            android:layout_height="202dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:contentDescription="@string/upload_photo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
+
+        <TextView
+            android:id="@+id/tvFruitBenefit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="@string/fruit_benefits"
+            app:layout_constraintEnd_toEndOf="@+id/edtFruitName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/edtFruitName"
+            app:layout_constraintTop_toBottomOf="@+id/edtFruitName" />
+
+        <EditText
+            android:id="@+id/edtFruitName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:ems="10"
+            android:hint="@string/fruit_name"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="@+id/tvFruitName"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/tvFruitName"
+            app:layout_constraintTop_toBottomOf="@+id/tvFruitName" />
+
+        <TextView
+            android:id="@+id/tvFruitName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="32dp"
+            android:layout_marginEnd="8dp"
+            android:text="@string/fruit_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/img_fruit"
+            app:layout_constraintTop_toBottomOf="@+id/img_fruit" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fabUploadPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="18dp"
+            android:clickable="true"
+            android:contentDescription="@string/add_photo"
+            android:focusable="true"
+            android:backgroundTint="#40A845"
+            app:layout_constraintBottom_toTopOf="@+id/tvFruitName"
+            app:layout_constraintEnd_toEndOf="@+id/img_fruit"
+            app:srcCompat="@android:drawable/ic_menu_camera" />
+
+        <EditText
+            android:id="@+id/edtFruitBenefit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:autofillHints=""
+            android:ems="10"
+            android:gravity="start|top"
+            android:hint="@string/fruit_benefits"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="@+id/tvFruitBenefit"
+            app:layout_constraintStart_toStartOf="@+id/tvFruitBenefit"
+            app:layout_constraintTop_toBottomOf="@+id/tvFruitBenefit" />
+
+        <Button
+            android:id="@+id/btAddFruit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="@string/ok"
+            app:layout_constraintEnd_toEndOf="@+id/edtFruitBenefit"
+            app:layout_constraintStart_toStartOf="@+id/edtFruitBenefit"
+            app:layout_constraintTop_toBottomOf="@+id/edtFruitBenefit" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

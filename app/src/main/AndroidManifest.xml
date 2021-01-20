@@ -9,6 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.FruitList">
+        <activity android:name=".ViewFruitActivity"></activity>
+        <activity android:name=".AddFruitActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"
