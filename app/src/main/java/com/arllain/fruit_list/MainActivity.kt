@@ -25,18 +25,35 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
         const val MAIN_ACTIVITY_DETAILS_REQUEST_CODE  = 1
         const val FRUIT_TO_ADD = "fruit_to_add"
         const val FRUIT_TO_DELETE = "fruit_to_delete"
+        const val FRUIT_LIST_SAVED = "fruit_list_saved"
     }
 
-    private var  fruitList = generateDummyList(4)
-    private val adapter = FruitAdapter(fruitList, this)
+    private var  fruitList = ArrayList<Fruit>();
+    private val adapter = FruitAdapter(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(findViewById(R.id.toolbar))
 
+        poupulateFruitList(savedInstanceState)
         setupAddButton()
         setupRecyclerView()
+    }
+
+
+    private fun poupulateFruitList(savedInstanceState: Bundle?) {
+        if (savedInstanceState == null) {
+            generateDummyList(4)
+        }else {
+            fruitList = savedInstanceState.getParcelableArrayList<Fruit>(FRUIT_LIST_SAVED) ?: ArrayList()
+        }
+        adapter.setProductList(fruitList)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putParcelableArrayList(FRUIT_LIST_SAVED, fruitList)
     }
 
     private fun setupAddButton() {
@@ -87,8 +104,7 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
         startActivityForResult(viewFruitIntent, MAIN_ACTIVITY_DETAILS_REQUEST_CODE)
     }
 
-    private fun generateDummyList(size: Int): ArrayList<Fruit> {
-        var fruitList = ArrayList<Fruit>()
+    private fun generateDummyList(size: Int) {
         for (i in 0 until size){
             val fruitImage = when (i) {
                 0 -> "iVBORw0KGgoAAAANSUhEUgAAAEcAAABkCAIAAABb6rrQAAAAAXNSR0IArs4c6QAAAANzQklUCAgI\n" +
@@ -965,8 +981,6 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
             val item = Fruit(fruitImage, "$fruitName", fruitBenefits)
             fruitList.add(item)
         }
-
-        return  fruitList
     }
 
 }

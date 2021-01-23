@@ -33,12 +33,13 @@
 
         <TextView
             android:id="@+id/fruit_name"
-            android:layout_width="236dp"
+            android:layout_width="0dp"
             android:layout_height="39dp"
             android:layout_marginStart="16dp"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintLeft_toRightOf="@+id/fruit_image_view"
             app:layout_constraintStart_toEndOf="@+id/fruit_image_view"
             app:layout_constraintTop_toTopOf="parent"
@@ -46,11 +47,12 @@
 
         <TextView
             android:id="@+id/fruit_benefits"
-            android:layout_width="236dp"
-            android:layout_height="16dp"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="8dp"
             android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/fruit_name"
             app:layout_constraintLeft_toRightOf="@+id/fruit_image_view"
             app:layout_constraintStart_toEndOf="@+id/fruit_image_view"
             app:layout_constraintTop_toBottomOf="@+id/fruit_name"

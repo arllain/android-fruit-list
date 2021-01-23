@@ -8,9 +8,9 @@ import com.arllain.fruit_list.model.Fruit
 import com.arllain.fruit_list.utils.convertToBitmap
 import com.arllain.fruit_list.viewholder.FruitViewHolder
 
-class FruitAdapter(
-    private val fruitList: List<Fruit>,
-    private val listener: FruitViewHolder.OnItemClickListener) : RecyclerView.Adapter<FruitViewHolder>() {
+class FruitAdapter(private val listener: FruitViewHolder.OnItemClickListener) : RecyclerView.Adapter<FruitViewHolder>() {
+
+    private var fruitList: List<Fruit> = ArrayList<Fruit>();
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FruitViewHolder {
         val itemView = LayoutInflater.from(parent.context).inflate(
@@ -26,7 +26,16 @@ class FruitAdapter(
 
         holder.fruitImage.setImageBitmap(currentItem.imageBase64?.convertToBitmap())
         holder.fruitName.text = (currentItem.name)
-        holder.fruitBenefits.text = (currentItem.benefits)
+        if (currentItem.benefits?.length!! > 80){
+            holder.fruitBenefits.text = currentItem.benefits!!.substring(0, 80) + " ..."
+        }else {
+            holder.fruitBenefits.text = (currentItem.benefits)
+        }
+    }
+
+    fun setProductList(fruits: List<Fruit>) {
+        fruits.also { this.fruitList = it }
+        notifyDataSetChanged()
     }
 
     override fun getItemCount() = fruitList.size
