@@ -24,6 +24,8 @@ class AddFruitActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddFruitBinding.inflate(layoutInflater)
+        supportActionBar?.setTitle("Add Fruit")
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
         setContentView(binding.root)
         setupInsertButton();
         setUpPhotoAddButton();

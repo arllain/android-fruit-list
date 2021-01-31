@@ -2,17 +2,13 @@ package com.arllain.fruit_list
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
-import android.os.Build
 import android.os.Bundle
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arllain.fruit_list.adapter.FruitAdapter
+import com.arllain.fruit_list.databinding.ActivityMainBinding
 import com.arllain.fruit_list.model.Fruit
-import com.arllain.fruit_list.utils.convertToBase64
 import com.arllain.fruit_list.viewholder.FruitViewHolder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
@@ -30,11 +26,14 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
 
     private var  fruitList = ArrayList<Fruit>();
     private val adapter = FruitAdapter(this)
+    private lateinit var binding: ActivityMainBinding
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_main)
-        setSupportActionBar(findViewById(R.id.toolbar))
+        setSupportActionBar(findViewById(R.id.actionbar))
 
         poupulateFruitList(savedInstanceState)
         setupAddButton()

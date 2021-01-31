@@ -27,6 +27,8 @@ class ViewFruitActivity : AppCompatActivity() {
         binding.tvFruitName.text = fruit?.name
         binding.fruitImageView.setImageBitmap(fruit?.imageBase64?.convertToBitmap())
         binding.fruitBenefits.text = fruit?.benefits
+        supportActionBar?.setTitle(fruit?.name)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     private fun setupDeleteButton() {
