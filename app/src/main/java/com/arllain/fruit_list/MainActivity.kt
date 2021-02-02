@@ -3,6 +3,8 @@ package com.arllain.fruit_list
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.widget.SearchView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -101,6 +103,30 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
         val viewFruitIntent = Intent(this@MainActivity, ViewFruitActivity::class.java)
         viewFruitIntent.putExtra(MAIN_ACTIVITY_FRUIT_EXTRA_ID, fruit)
         startActivityForResult(viewFruitIntent, MAIN_ACTIVITY_DETAILS_REQUEST_CODE)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        menuInflater.inflate(R.menu.menu, menu)
+
+        val menuItem = menu!!.findItem(R.id.search)
+
+        val search = menuItem.actionView as SearchView
+
+        search.maxWidth = Int.MAX_VALUE
+
+        search.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(filterString: String?): Boolean {
+                adapter.filter.filter(filterString)
+                return true
+            }
+
+            override fun onQueryTextChange(filterString: String?): Boolean {
+                adapter.filter.filter(filterString)
+                return true
+            }
+
+        })
+        return true
     }
 
     private fun generateDummyList(size: Int) {
@@ -949,7 +975,7 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
             val fruitName = when(i) {
                 0 -> "Banana"
                 1 -> "Mamão"
-                2 -> "Maça"
+                2 -> "Maçã"
                 3 -> "Abacaxi"
                 else -> "Fruita $i"
             }
