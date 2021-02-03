@@ -4,8 +4,11 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
+import android.view.MenuItem
 import android.widget.SearchView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SwitchCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.arllain.fruit_list.adapter.FruitAdapter
@@ -13,6 +16,7 @@ import com.arllain.fruit_list.databinding.ActivityMainBinding
 import com.arllain.fruit_list.model.Fruit
 import com.arllain.fruit_list.viewholder.FruitViewHolder
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
@@ -24,6 +28,9 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
         const val FRUIT_TO_ADD = "fruit_to_add"
         const val FRUIT_TO_DELETE = "fruit_to_delete"
         const val FRUIT_LIST_SAVED = "fruit_list_saved"
+        const val REMOVE_DUPLICATED_NAMES = "REMOVE_DUPLICATED_NAMES"
+        const val ALPHABETICAL_ORDER = "ALPHABETICAL_ORDER"
+        const val REMOVE_AND_ORDER = "REMOVE_AND_ORDER"
     }
 
     private var  fruitList = ArrayList<Fruit>();
@@ -45,7 +52,7 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
 
     private fun poupulateFruitList(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
-            generateDummyList(4)
+            generateDummyList(6)
         }else {
             fruitList = savedInstanceState.getParcelableArrayList<Fruit>(FRUIT_LIST_SAVED) ?: ArrayList()
         }
@@ -126,7 +133,45 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
             }
 
         })
-        return true
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem) = when (item.itemId) {
+        R.id.filter -> {
+            val builder = AlertDialog.Builder(this)
+            val view = layoutInflater.inflate(R.layout.config_dialog, null)
+            val scDuplicateName = view.findViewById<SwitchCompat>(R.id.scDuplicateName)
+            val scAlphabeticalOrder = view.findViewById<SwitchCompat>(R.id.scAlpahbeticalOrder)
+
+            scDuplicateName.isChecked = adapter.isFilteredByDuplicatedName()
+            scAlphabeticalOrder.isChecked = adapter.isFilteredByAlphabethicalOrder()
+            builder.apply {
+                setView(view)
+                setPositiveButton("ok") { dialog, _ ->
+                    val removeDuplicatedNamesChecked = scDuplicateName.isChecked
+                    val alphabeticalChecked = scAlphabeticalOrder.isChecked
+
+                    if (removeDuplicatedNamesChecked && alphabeticalChecked) {
+                        adapter.filter.filter(REMOVE_AND_ORDER)
+                    } else if (alphabeticalChecked) {
+                        adapter.filter.filter(ALPHABETICAL_ORDER)
+                    } else if (removeDuplicatedNamesChecked ) {
+                        adapter.filter.filter(REMOVE_DUPLICATED_NAMES)
+                    } else {
+                        adapter.filter.filter("")
+                    }
+                    dialog.dismiss()
+                }
+            }
+            builder.create().show()
+            true
+        }
+
+        else -> {
+            // If we got here, the user's action was not recognized.
+            // Invoke the superclass to handle it.
+            super.onOptionsItemSelected(item)
+        }
     }
 
     private fun generateDummyList(size: Int) {
@@ -977,7 +1022,7 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
                 1 -> "Mamão"
                 2 -> "Maçã"
                 3 -> "Abacaxi"
-                else -> "Fruita $i"
+                else -> "Banana"
             }
 
             val fruitBenefits = when(i) {
@@ -987,7 +1032,7 @@ class MainActivity : AppCompatActivity(), FruitViewHolder.OnItemClickListener {
                         " e com preço acessível"
                 1 -> "O mamão possui uma boa quantidade de nutrientes essenciais para a saúde. " +
                         "É rico em sais minerais, como Cálcio, Fósforo, Ferro, Sódio e Potássio, " +
-                        "que participam na formação de ossos, dentes e sangue. O fruto também " +
+                        "que participam na formacao de ossos, dentes e sangue. O fruto também " +
                         "contém quantidades significativas de vitaminas A e C."
                 2 -> "O maçã é também uma fruta rica em antioxidantes, como antocianinas e " +
                         "o ácido elágico, que conferem outros benefícios para a saúde, tias como " +
